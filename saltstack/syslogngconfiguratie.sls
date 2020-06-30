@@ -15,3 +15,8 @@ syslog-ng configuratie:
         };
         destination loghost { tcp("10.0.7.86" port(514)); };
         log { source(s_local); destination(loghost); };
+
+syslog-ng:
+  service.running:
+    - enable: True
+    - reload: True
