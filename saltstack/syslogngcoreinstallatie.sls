@@ -42,10 +42,17 @@ Aanmaken van Directory log:
     - group: jurian
     - mode: 755
     - makedirs: True
-	
+
 Aanmaken van File log:
   file.managed:
     - name: /var/log/syslog-ng/logs.text
     - user: jurian
     - group: jurian
     - mode: 755
+
+syslog-ng:
+  service.running:
+    - enable: True
+    - reload: True
+    - watch:
+      - pkg: syslog-ng
