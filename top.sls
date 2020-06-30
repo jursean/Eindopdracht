@@ -1,0 +1,4 @@
+base:
+    '*':
+    - nagiosconfiguratie
+    - nagiosinstallatie
