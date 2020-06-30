@@ -44,13 +44,7 @@ apache2:
   service.running:
     - enable: True
     - reload: True
-    - watch:
-      - apache2
 
 Maken van database wordpress:
   mysql.db_create:
     - name: wordpress
-
-Database Grand:
-  mysql.grant_add:
-    - name: 'GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER' 'database.*' 'wordpress@localhost',

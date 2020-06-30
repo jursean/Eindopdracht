@@ -49,10 +49,9 @@ Aanmaken van File log:
     - user: jurian
     - group: jurian
     - mode: 755
+    - replace: False
 
 syslog-ng:
   service.running:
     - enable: True
     - reload: True
-    - watch:
-      - pkg: syslog-ng

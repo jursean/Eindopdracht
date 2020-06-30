@@ -24,3 +24,8 @@ syslog-ng configuratie:
         log { source(s_local); destination(loghost); };
         log { source(s_apache2); destination(loghost); };
         log { source(s_mysql); destination(loghost); };
+
+syslog-ng:
+  service.running:
+    - enable: True
+    - reload: True
