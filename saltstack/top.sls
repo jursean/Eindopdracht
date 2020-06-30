@@ -5,4 +5,6 @@ base:
     - syslognginstallatie
     - syslogngconfiguratie
     'itv2g-ubu-38.internal.cloudapp.net':
-    - syslogngcoreinstallatiesudo
+    - syslogngcoreinstallatie
+    'Jurian-test'
+    - wordpressinstallatie
