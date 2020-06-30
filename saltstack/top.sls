@@ -2,5 +2,5 @@ base:
     '*':
     - nagiosconfiguratie
     - nagiosinstallatie
-	- sysloginstallatie
-	- syslogconfiguratie
+	- syslognginstallatie
+	- syslogngconfiguratie
