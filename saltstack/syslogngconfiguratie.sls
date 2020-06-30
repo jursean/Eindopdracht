@@ -2,7 +2,7 @@ Oude config file syslog-ng opslaan als back-up:
   file.rename:
     - name: /etc/syslog-ng/syslog-ng.conf.BAK
     - source: /etc/syslog-ng/syslog-ng.conf
-	
+
 syslog-ng configuratie:
   file.append:
     - name: /etc/syslog-ng/syslog-ng.conf
