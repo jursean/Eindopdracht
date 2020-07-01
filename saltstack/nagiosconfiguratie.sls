@@ -2,7 +2,7 @@ Toevoegen van client address:
   file.line:
     - name: /etc/nagios/nrpe.cfg
     - content: server_address={{ salt['grains.get']('fqdn_ip4')[0] }}
-    - match: #server_address=127.0.0.1
+    - match: server_address=127.0.0.1
     - mode: replace
 
 Toevoegen van nagios server address:
@@ -21,3 +21,9 @@ Toevoegen commands aan nrpe_local:
       - command[check_ssh]=/usr/lib/nagios/plugins/check_ssh -4 {{ salt['grains.get']('fqdn_ip4')[0] }}
       - command[check_http]=/usr/lib/nagios/plugins/check_http -I {{ salt['grains.get']('fqdn_ip4')[0] }}
       - command[check_apt]=/usr/lib/nagios/plugins/check_apt
+
+sudo systemctl restart nagios-nrpe-server
+  cmd.run
+
+sudo systemctl enable nagios-nrpe-server
+  cmd.run
