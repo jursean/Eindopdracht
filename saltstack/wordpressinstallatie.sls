@@ -5,7 +5,8 @@ Installeren van Lamp en wordpress:
       - php
       - libapache2-mod-php
       - mysql-server
-      - php-mysql
+      - php-mysqldb
+      - python-dev
 
 Aanmaken wordpress.conf:
   file.managed:
@@ -13,10 +14,11 @@ Aanmaken wordpress.conf:
     - user: jurian
     - group: jurian
     - mode: 755
+    - replace: False
 
 Wordpress.conf File bijwerken:
   file.append:
-    - name: /etc/syslog-ng/syslog-ng.conf
+    - name: /etc/apache2/sites-available/wordpress.conf
     - text: |
         Alias /blog /usr/share/wordpress
         <Directory /usr/share/wordpress>
@@ -32,13 +34,20 @@ Wordpress.conf File bijwerken:
             Allow from all
         </Directory> 
 
-Wordpress enablen:
-  apache_module.enable:
-    - name: wordpress
+sudo a2enmod rewrite:
+  cmd.run:
+    - unless: test -f /etc/apache2/mods-enabled/rewrite.load
+    - require:
+      - pkg: apache2
 
-Wordpress rewrite:
-  apache_module.enable:
-    - name: rewrite
+apache2:
+  service.running:
+    - name: apache2
+    - require:
+      - pkg: apache2
+    - watch:
+      - cmd: sudo a2enmod wordpress
+      - cmd: sudo a2enmod rewrite
 
 apache2:
   service.running:
@@ -46,16 +55,21 @@ apache2:
     - reload: True
 
 Maken User SQL:
-  mysql.user.present:
+  mysql_user.present:
     - name: wordpress
-    - host: localhost
     - password: Welkom123
+    - host: localhost
 
 Maken van database wordpress:
-  mysql.db_create:
+  mysql_database.present:
     - name: wordpress
+    - connection_host: localhost
+    - connection_user: root
+    - connection_pass:
+    - require:
+      - pip: mysql
 
-Grant:
+wordpress:
   mysql_grants.present:
     - grant: select,insert,update,delete,create,drop,alter
     - database: wordpress.*
@@ -75,7 +89,8 @@ Wordpress config&database:
         define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
         ?>
 
-Starten MYSQL:
-  service.start:
-    - name: mysql
+wordpress:
+  service.running:
+    - enable: True
+    - reload: True
 
