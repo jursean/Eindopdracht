@@ -33,11 +33,11 @@ Wordpress.conf File bijwerken:
         </Directory> 
 
 Wordpress enablen:
-  apache.a2enmod:
+  apache_module.enable:
     - name: wordpress
 
 Wordpress rewrite:
-  apache.a2enmod:
+  apache_module.enable:
     - name: rewrite
 
 apache2:
@@ -45,6 +45,37 @@ apache2:
     - enable: True
     - reload: True
 
+Maken User SQL:
+  mysql.user.present:
+    - name: wordpress
+    - host: localhost
+    - password: Welkom123
+
 Maken van database wordpress:
   mysql.db_create:
     - name: wordpress
+
+Grant:
+  mysql_grants.present:
+    - grant: select,insert,update,delete,create,drop,alter
+    - database: wordpress.*
+    - user: wordpress
+    - host: localhost
+
+Wordpress config&database:
+  file.append:
+    - name: /etc/wordpress/config-localhost.php
+    - text: |
+        <?php
+        define('DB_NAME', 'wordpress');
+        define('DB_USER', 'wordpress');
+        define('DB_PASSWORD', '<your-password>');
+        define('DB_HOST', 'localhost');
+        define('DB_COLLATE', 'utf8_general_ci');
+        define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
+        ?>
+
+Starten MYSQL:
+  service.start:
+    - name: mysql
+
