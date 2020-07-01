@@ -5,7 +5,6 @@ Installeren van Lamp en wordpress:
       - php
       - libapache2-mod-php
       - mysql-server
-      - php-mysqldb
       - python-dev
 
 Aanmaken wordpress.conf:
@@ -37,22 +36,24 @@ Wordpress.conf File bijwerken:
 sudo a2enmod rewrite:
   cmd.run:
     - unless: test -f /etc/apache2/mods-enabled/rewrite.load
-    - require:
-      - pkg: apache2
 
 apache2:
   service.running:
     - name: apache2
-    - require:
-      - pkg: apache2
     - watch:
-      - cmd: sudo a2enmod wordpress
       - cmd: sudo a2enmod rewrite
 
-apache2:
-  service.running:
-    - enable: True
-    - reload: True
+Config minion aanpassen voor mySQL:
+  file.append:
+    - name: /etc/salt/minion
+    - text: |
+        mysql.host: 'localhost'
+        mysql.port: 3306
+        mysql.user: 'root'
+        mysql.pass: ''
+        mysql.db: 'mysql'
+        mysql.unix_socket: '/tmp/mysql.sock'
+        mysql.charset: 'utf8'
 
 Maken User SQL:
   mysql_user.present:
@@ -66,8 +67,10 @@ Maken van database wordpress:
     - connection_host: localhost
     - connection_user: root
     - connection_pass:
-    - require:
-      - pip: mysql
+
+Maken database:
+  mysql.db_create:
+    - name: wordpress
 
 wordpress:
   mysql_grants.present:
@@ -83,14 +86,8 @@ Wordpress config&database:
         <?php
         define('DB_NAME', 'wordpress');
         define('DB_USER', 'wordpress');
-        define('DB_PASSWORD', '<your-password>');
+        define('DB_PASSWORD', 'Welkom123');
         define('DB_HOST', 'localhost');
         define('DB_COLLATE', 'utf8_general_ci');
         define('WP_CONTENT_DIR', '/usr/share/wordpress/wp-content');
         ?>
-
-wordpress:
-  service.running:
-    - enable: True
-    - reload: True
-
