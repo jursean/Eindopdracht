@@ -125,3 +125,5 @@ define service {
 }" > /usr/local/nagios/etc/servers/${minion_h}.cfg
 	fi
 done
+
+sudo systemctl restart nagios.service
