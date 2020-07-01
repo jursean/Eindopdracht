@@ -8,5 +8,5 @@ base:
     'Jurian-test':
     - wordpressinstallatie
     - syslogngwordpressconfiguratie
-    'Jurian-docker':
+    'Jurian-docker.internal.cloudapp.net':
     - dockerinstallatie
