@@ -13,7 +13,7 @@ syslog-ng configuratie:
         source s_local { 
              system(); internal(); 
         };
-        destination loghost { tcp("10.0.7.86" port(514)); };
+        destination loghost { syslog("10.0.7.86" transport("tcp") port(514)); };
         log { source(s_local); destination(loghost); };
 
 syslog-ng:

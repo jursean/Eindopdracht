@@ -45,7 +45,7 @@ Aanmaken van Directory log:
 
 Aanmaken van File log:
   file.managed:
-    - name: /var/log/syslog-ng/logs.text
+    - name: /var/log/syslog-ng/logs.txt
     - user: jurian
     - group: jurian
     - mode: 755

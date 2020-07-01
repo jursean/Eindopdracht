@@ -20,24 +20,24 @@ syslog-ng configuratie:
         source s_mysql {
              file("/var/log/mysql/error_log");
         };
-        destination loghost { tcp("10.0.7.86" port(514)); };
+        destination loghost { syslog("10.0.7.86" transport("tcp") port(514)); };
         log { source(s_local); destination(loghost); };
         log { source(s_apache2); destination(loghost); };
         log { source(s_mysql); destination(loghost); };
 
-chmod 777 /var/log/apache2
+chmod 777 /var/log/apache2:
   cmd.run
   
-chmod 777 /var/log/apache2/access_log
+chmod 777 /var/log/apache2/access.log:
   cmd.run
 
-chmod 777 /var/log/apache2/error_log
+chmod 777 /var/log/apache2/error.log:
   cmd.run
 
-chmod 777 /var/log/mysql
+chmod 777 /var/log/mysql:
   cmd.run
 
-chmod 777 /var/log/mysql/error_log
+chmod 777 /var/log/mysql/error.log:
   cmd.run
 
 syslog-ng:
