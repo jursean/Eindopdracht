@@ -7,4 +7,4 @@ base:
     - syslogngcoreinstallatie
     'Jurian-test':
     - wordpressinstallatie
-    - syslogngconfiguratie
+    - syslogngwordpressconfiguratie

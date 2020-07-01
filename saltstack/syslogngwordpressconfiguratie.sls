@@ -25,6 +25,21 @@ syslog-ng configuratie:
         log { source(s_apache2); destination(loghost); };
         log { source(s_mysql); destination(loghost); };
 
+chmod 777 /var/log/apache2
+  cmd.run
+  
+chmod 777 /var/log/apache2/access_log
+  cmd.run
+
+chmod 777 /var/log/apache2/error_log
+  cmd.run
+
+chmod 777 /var/log/mysql
+  cmd.run
+
+chmod 777 /var/log/mysql/error_log
+  cmd.run
+
 syslog-ng:
   service.running:
     - enable: True
