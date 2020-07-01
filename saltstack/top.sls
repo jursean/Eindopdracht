@@ -10,3 +10,4 @@ base:
     - syslogngwordpressconfiguratie
     'jurian-docker.internal.cloudapp.net':
     - dockerinstallatie
+    - syslogconfiguratie
